@@ -27,3 +27,4 @@ flutter:
   assets:
     - assets/register_imgs/
     - assets/avatars/
+    - assets/app/

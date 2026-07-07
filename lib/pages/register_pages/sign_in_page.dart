@@ -4,14 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../models/buttun.dart';
 import '../../models/custom_input_field.dart';
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignIngPage extends StatefulWidget {
+  const SignIngPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignIngPage> createState() => _SignIngPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignIngPageState extends State<SignIngPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
@@ -32,7 +32,7 @@ class _SignUpPageState extends State<SignUpPage> {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
-            onPressed:(){},
+          onPressed:(){},
         ),
       ),
       body: Container(
@@ -54,7 +54,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                     child: Text(
-                      "Create Account!",
+                      "SIGN IN",
                       style: TextStyle(
                         fontSize: 30.sp,
                         color: const Color(0xFF1D293D),
@@ -143,37 +143,36 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(
                     width: 310.w,
-                    height:52.h,
                     child: buttun(
                       color: Color(0xFF00DC82),
-                      text: 'CREATE ACCOUNT!', onTab: (){},
+                      text: 'SIGN UP', onTab: (){},
                       height: 52.h,
                       width: 310.w, txcolor: Colors.white,),
                   ),
                   Padding(padding: .only(top: 16.h),
-                    child: RichText(
-                      text: TextSpan(
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: const Color(0xFF9AA5B1),
-                        ),
-                        children: [
-                          const TextSpan(text: "Already have an account? "),
-                          TextSpan(
-                            text: "Sign in",
-                            style: const TextStyle(
-                              color: Color(0xFF2196F3),
-                              fontWeight: FontWeight.w700,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-
-                              },
+                      child: RichText(
+                        text: TextSpan(
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: const Color(0xFF9AA5B1),
                           ),
-                        ],
-                      ),
-                  ))
+                          children: [
+                            const TextSpan(text: "Don't have an account  "),
+                            TextSpan(
+                              text: "Sign in",
+                              style: const TextStyle(
+                                color: Color(0xFF2196F3),
+                                fontWeight: FontWeight.w700,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+
+                                },
+                            ),
+                          ],
+                        ),
+                      ))
                 ],
               ),
             ),
