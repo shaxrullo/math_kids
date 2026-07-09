@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:math_kids/pages/onboarding_pages/onboarding6_page.dart';
-import 'package:math_kids/pages/register_pages/sign_in_page.dart';
-import 'package:math_kids/pages/splash_pages/splash_page.dart';
+import 'package:math_kids/pages/coin_pages/coins_page.dart';
 void main() {
   runApp( MyApp());
 }
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner:false,
-          home: SplashPage(),
+          home: CoinsPage(),
         );
       },
     );

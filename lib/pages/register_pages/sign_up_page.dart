@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../models/buttun.dart';
 import '../../models/custom_input_field.dart';
@@ -55,7 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                     child: Text(
                       "Create Account!",
-                      style: TextStyle(
+                      style: GoogleFonts.lilitaOne(
                         fontSize: 30.sp,
                         color: const Color(0xFF1D293D),
                       ),
@@ -143,7 +144,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   SizedBox(
                     width: 310.w,
-                    height:52.h,
                     child: buttun(
                       color: Color(0xFF00DC82),
                       text: 'CREATE ACCOUNT!', onTab: (){},
