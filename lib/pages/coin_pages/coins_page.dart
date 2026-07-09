@@ -260,6 +260,10 @@ class secondary_page extends StatelessWidget {
     );
   }
 }
+// git checkout main
+// git pull origin main
+// git merge shaxrullo
+// git push origin main
 
 class first_page extends StatelessWidget {
   const first_page({
