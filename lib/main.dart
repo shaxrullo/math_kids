@@ -12,9 +12,7 @@ import 'package:math_kids/pages/register_pages/sign_Up_page.dart';
 import 'package:math_kids/pages/splash_pages/splash_page.dart';
 import 'package:math_kids/pages/stakes/steak.dart';
 import 'package:math_kids/pages/stakes/steakIn.dart';
-<<<<<<< HEAD
 import 'package:math_kids/pages/coin_pages/coins_page.dart';
-=======
 import 'package:math_kids/pages/substraction/substraction.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -25,8 +23,6 @@ Future<void> main() async {
     url: 'https://qpuphyurkgdovloytxmd.supabase.co',
     anonKey: 'sb_publishable_Ie275fiObtcoouNnRhzN6w_lCltB_kH',
   );
->>>>>>> 38e61e2 (yangi narsalar qoshildi)
-
   runApp(
     ScreenUtilInit(
       designSize: const Size(390, 844),
@@ -35,11 +31,8 @@ Future<void> main() async {
       builder: (context, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-<<<<<<< HEAD
-          home: CoinsPage(),
-=======
+
           home: SignUpPage(),
->>>>>>> 38e61e2 (yangi narsalar qoshildi)
         );
       },
     ),
