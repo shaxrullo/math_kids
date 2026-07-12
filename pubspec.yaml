@@ -12,10 +12,14 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.8
   flutter_screenutil: ^5.9.3
-  bloc: ^9.2.1
-  flutter_bloc: ^9.1.1
   wheel_picker: ^0.3.0
   google_fonts: ^8.1.0
+<<<<<<< HEAD
+=======
+  table_calendar: ^3.2.0
+  supabase: ^2.14.0
+  supabase_flutter: ^2.16.0
+>>>>>>> 38e61e2 (yangi narsalar qoshildi)
 
 dev_dependencies:
   flutter_test:

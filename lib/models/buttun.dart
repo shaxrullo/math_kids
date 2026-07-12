@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class buttun extends StatelessWidget {
   Color color;
   Color txcolor;
   String text;
-  var onTab;
+  VoidCallback onTab;
   double height;
   double width;
 
@@ -23,9 +24,7 @@ class buttun extends StatelessWidget {
   // Asosiy rangdan pastroq (qorong'iroq) soya rangini hisoblaydi
   Color get _shadowColor {
     final hsl = HSLColor.fromColor(color);
-    return hsl
-        .withLightness((hsl.lightness - 0.12).clamp(0.0, 1.0))
-        .toColor();
+    return hsl.withLightness((hsl.lightness - 0.12).clamp(0.0, 1.0)).toColor();
   }
 
   @override
@@ -66,7 +65,7 @@ class buttun extends StatelessWidget {
                   child: Text(
                     text,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: GoogleFonts.lilitaOne(
                       fontSize: 16.sp,
                       fontWeight: FontWeight.bold,
                       color: txcolor,

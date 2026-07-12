@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:math_kids/pages/onboarding_pages/onboarding7_page.dart';
+import 'package:math_kids/pages/stakes/steak.dart';
 
 import '../../models/buttun.dart';
 import '../../models/onbording.dart';
@@ -18,7 +20,7 @@ class _Onboarding6PageState extends State<Onboarding6Page> {
 
   static const Color _boyAccentColor = Color(0xFF1DBF73);
   static const Color _girlAccentColor = Color(0xFFD4537E);
-  static const Color _girlColor = Color(0xFF1D293D); // tanlanmagan holat rangi
+  static const Color _girlColor = Color(0xFF1D293D);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,12 @@ class _Onboarding6PageState extends State<Onboarding6Page> {
       appBar: OnboardingAppBar(
         progress: 1,
         onClose: () => Navigator.pop(context),
-        onSkip: () {},
+        onSkip: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Steak()),
+          );
+        },
       ),
       body: Column(
         children: [
@@ -76,23 +83,19 @@ class _Onboarding6PageState extends State<Onboarding6Page> {
               children: [
                 Expanded(
                   child: buttun(
-                    color: const Color(0xFFE3E8EF),
-                    text: "Previous",
-                    onTab: () => Navigator.pop(context),
-                    height: 56.h,
-                    width: double.infinity, txcolor: Colors.black,
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                Expanded(
-                  child: buttun(
                     color: const Color(0xFF00BCFF),
                     text: "Next",
                     onTab: () {
-                      // Keyingi sahifaga o'tish
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Onboarding7Page(),
+                        ),
+                      );
                     },
                     height: 56.h,
-                    width: double.infinity, txcolor: Colors.white,
+                    width: double.infinity,
+                    txcolor: Colors.white,
                   ),
                 ),
               ],

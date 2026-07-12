@@ -1,25 +1,47 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:math_kids/constlar/supabase.dart';
+import 'package:math_kids/pages/onboarding_pages/onboarding_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../models/buttun.dart';
 import '../../models/custom_input_field.dart';
-class SignIngPage extends StatefulWidget {
-  const SignIngPage({super.key});
+
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignIngPage> createState() => _SignIngPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignIngPageState extends State<SignIngPage> {
-  final TextEditingController _nameController = TextEditingController();
+class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _emailController.dispose();
-    super.dispose();
+  Future<void> signUp() async {
+    try {
+      final response = await supabase.auth.signUp(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      if (response.user != null) {
+        print("Ro'yxatdan o'tdi");
+        print(response.user!.id);
+        if (response.user != null) {
+          await supabase.from("users").insert({
+            "id": response.user!.id,
+            "streak": 0,
+            "last_login": DateTime.now().toIso8601String().split("T").first,
+          });
+        }
+      }
+    } on AuthException catch (e) {
+      print(e.message);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -30,10 +52,6 @@ class _SignIngPageState extends State<SignIngPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
-          onPressed:(){},
-        ),
       ),
       body: Container(
         padding: EdgeInsets.only(top: 105.h),
@@ -52,9 +70,12 @@ class _SignIngPageState extends State<SignIngPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 16.h,
+                    ),
                     child: Text(
-                      "SIGN IN",
+                      "Create Account!",
                       style: TextStyle(
                         fontSize: 30.sp,
                         color: const Color(0xFF1D293D),
@@ -121,9 +142,9 @@ class _SignIngPageState extends State<SignIngPage> {
                           width: 310.w,
                           height: 84.h,
                           child: CustomInputField(
-                            label: 'Name',
-                            hintText: 'Enter your name',
-                            controller: _nameController,
+                            label: 'Email',
+                            hintText: 'Enter your email',
+                            controller: _passwordController,
                             status: InputFieldStatus.filled,
                           ),
                         ),
@@ -131,48 +152,58 @@ class _SignIngPageState extends State<SignIngPage> {
                           width: 310.w,
                           height: 84.h,
                           child: CustomInputField(
-                            label: 'Email',
-                            hintText: 'Enter your email',
+                            label: 'Password',
+                            hintText: 'Enter your password',
                             controller: _emailController,
                             status: InputFieldStatus.filled,
                           ),
                         ),
-
                       ],
                     ),
                   ),
                   SizedBox(
                     width: 310.w,
+                    height: 52.h,
                     child: buttun(
                       color: Color(0xFF00DC82),
-                      text: 'SIGN UP', onTab: (){},
+                      text: 'CREATE ACCOUNT!',
+                      onTab: () {
+                        signUp();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Onboarding()),
+                        );
+                        print("object");
+                        print(supabase.auth.currentUser);
+                      },
                       height: 52.h,
-                      width: 310.w, txcolor: Colors.white,),
+                      width: 310.w,
+                      txcolor: Colors.white,
+                    ),
                   ),
-                  Padding(padding: .only(top: 16.h),
-                      child: RichText(
-                        text: TextSpan(
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: const Color(0xFF9AA5B1),
-                          ),
-                          children: [
-                            const TextSpan(text: "Don't have an account  "),
-                            TextSpan(
-                              text: "Sign in",
-                              style: const TextStyle(
-                                color: Color(0xFF2196F3),
-                                fontWeight: FontWeight.w700,
-                              ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-
-                                },
-                            ),
-                          ],
+                  Padding(
+                    padding: .only(top: 16.h),
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: const Color(0xFF9AA5B1),
                         ),
-                      ))
+                        children: [
+                          const TextSpan(text: "Already have an account? "),
+                          TextSpan(
+                            text: "Sign In",
+                            style: const TextStyle(
+                              color: Color(0xFF2196F3),
+                              fontWeight: FontWeight.w700,
+                            ),
+                            recognizer: TapGestureRecognizer()..onTap = () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -182,4 +213,3 @@ class _SignIngPageState extends State<SignIngPage> {
     );
   }
 }
-
