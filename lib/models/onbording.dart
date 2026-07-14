@@ -19,7 +19,7 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor:Color(0xFFF7F9FC),
+      backgroundColor: Color(0xFFF7F9FC),
       elevation: 0,
       titleSpacing: 0,
       title: Padding(
@@ -27,22 +27,11 @@ class OnboardingAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           children: [
             // Yopish tugmasi
-            GestureDetector(
-              onTap: onClose,
-              child: Icon(
-                Icons.close_rounded,
-                color: const Color(0xFF1D293D),
-                size: 22.sp,
-              ),
-            ),
-            SizedBox(width: 12.w),
-
-            // Progress bar
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   border: .all(color: Colors.black54),
-                  borderRadius: .circular(20.r)
+                  borderRadius: .circular(20.r),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(20.r),

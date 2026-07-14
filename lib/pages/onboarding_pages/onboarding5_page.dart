@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:math_kids/models/buttun.dart';
+import 'package:math_kids/pages/onboarding_pages/onboarding6_page.dart';
+import 'package:math_kids/pages/stakes/steak.dart';
 
 import '../../colors/colors.dart';
 import '../../models/onbording.dart';
@@ -19,7 +22,12 @@ class _Onboarding5PageState extends State<Onboarding5Page> {
       appBar: OnboardingAppBar(
         progress: 0.83,
         onClose: () => Navigator.pop(context),
-        onSkip: () {},
+        onSkip: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Steak()),
+          );
+        },
       ),
       body: Column(
         children: [
@@ -33,15 +41,21 @@ class _Onboarding5PageState extends State<Onboarding5Page> {
                 children: [
                   SizedBox(
                     width: 300.w,
-                    child: Text("Before we direct you to your profile, let’s clarify the last question!",
+                    child: Text(
+                      "Before we direct you to your profile, let’s clarify the last question!",
                       textAlign: .center,
-                      style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),),
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(
-                      width: 200.w,
-                      height: 123.h,
-                      child: Image.asset("assets/register_imgs/img_1.png"))
+                    width: 200.w,
+                    height: 123.h,
+                    child: Image.asset("assets/register_imgs/img_1.png"),
+                  ),
                 ],
               ),
             ),
@@ -52,10 +66,15 @@ class _Onboarding5PageState extends State<Onboarding5Page> {
             child: buttun(
               color: const Color(0xFF00BCFF),
               text: "CONTINUE",
-              onTab: () {},
+              onTab: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Onboarding6Page()),
+                );
+              },
               height: 52.h,
-              width: 310.w, txcolor: Colors.white,
-
+              width: 310.w,
+              txcolor: Colors.white,
             ),
           ),
         ],

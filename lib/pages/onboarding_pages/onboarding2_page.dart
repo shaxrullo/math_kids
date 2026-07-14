@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:math_kids/colors/colors.dart';
 import 'package:math_kids/models/buttun.dart';
+import 'package:math_kids/pages/onboarding_pages/onboarding3_page.dart';
+import 'package:math_kids/pages/stakes/steak.dart';
 
 import '../../models/custom_input_field.dart';
 import '../../models/onbording.dart';
-
 
 class Onboarding2Page extends StatefulWidget {
   const Onboarding2Page({super.key});
@@ -30,7 +32,29 @@ class _Onboarding2PageState extends State<Onboarding2Page> {
       appBar: OnboardingAppBar(
         progress: 2 / 6,
         onClose: () => Navigator.pop(context),
-        onSkip: () {},
+        onSkip: () {
+          if (_nameController.text.isNotEmpty) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Steak()),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  'Ism kiritng',
+                  style: GoogleFonts.lilitaOne(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: AppColors.textWhite,
+                  ),
+                ),
+                duration: Duration(seconds: 2),
+                backgroundColor: Colors.black54,
+              ),
+            );
+          }
+        },
       ),
       body: Column(
         children: [
@@ -41,8 +65,6 @@ class _Onboarding2PageState extends State<Onboarding2Page> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 60.h),
-
-                  // Sarlavha
                   Center(
                     child: Text(
                       "Enter your name",
@@ -75,21 +97,36 @@ class _Onboarding2PageState extends State<Onboarding2Page> {
               children: [
                 Expanded(
                   child: SizedBox(
-                    child:buttun(color: AppColors.surfaceSecondary,
-                        text: "Previous",
-                        onTab: (){},
-                        height: 52.h,
-                        width: 310.w, txcolor: Colors.black,),
-                  ),
-                ),
-                SizedBox(width: 12.w),
-                Expanded(
-                  child: SizedBox(
-                    child: buttun(color: AppColors.brandContent,
-                        text: "Previous",
-                        onTab: (){},
-                        height: 52.h,
-                        width: 310.w, txcolor: Colors.white,),
+                    child: buttun(
+                      color: AppColors.brandContent,
+                      text: "Continue",
+                      onTab: () {
+                        if (_nameController.text.isNotEmpty) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => Onboarding3Page()),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                'Ism kiritng',
+                                style: GoogleFonts.lilitaOne(
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 18,
+                                  color: AppColors.textWhite,
+                                ),
+                              ),
+                              duration: Duration(seconds: 2),
+                              backgroundColor: Colors.black54,
+                            ),
+                          );
+                        }
+                      },
+                      height: 52.h,
+                      width: 310.w,
+                      txcolor: Colors.white,
+                    ),
                   ),
                 ),
               ],

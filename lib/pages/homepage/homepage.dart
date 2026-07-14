@@ -11,7 +11,9 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.black12,
         elevation: 12,
+        scrolledUnderElevation: 12,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(16.r)),
         ),
@@ -54,6 +56,7 @@ class Homepage extends StatelessWidget {
               ],
             ),
           ),
+          
         ],
       ),
       body: CustomScrollView(

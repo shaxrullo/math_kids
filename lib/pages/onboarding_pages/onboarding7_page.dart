@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:math_kids/models/buttun.dart';
+import 'package:math_kids/pages/stakes/steak.dart';
 
 import '../../colors/colors.dart';
 
@@ -28,15 +29,21 @@ class _Onboarding7PageState extends State<Onboarding7Page> {
                 children: [
                   SizedBox(
                     width: 300.w,
-                    child: Text("Alex, we’re happy to see you in Math Kids! Start your journey!",
+                    child: Text(
+                      "Alex, we’re happy to see you in Math Kids! Start your journey!",
                       textAlign: .center,
-                      style: TextStyle(fontSize: 16.sp, color: AppColors.textPrimary),),
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
                   SizedBox(height: 10.h),
                   SizedBox(
-                      width: 200.w,
-                      height: 123.h,
-                      child: Image.asset("assets/register_imgs/3.png"))
+                    width: 200.w,
+                    height: 123.h,
+                    child: Image.asset("assets/register_imgs/3.png"),
+                  ),
                 ],
               ),
             ),
@@ -47,10 +54,15 @@ class _Onboarding7PageState extends State<Onboarding7Page> {
             child: buttun(
               color: const Color(0xFF00BCFF),
               text: "START JOURNEY!",
-              onTab: () {},
+              onTab: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Steak()),
+                );
+              },
               height: 52.h,
-              width: 310.w, txcolor: Colors.white,
-
+              width: 310.w,
+              txcolor: Colors.white,
             ),
           ),
         ],
