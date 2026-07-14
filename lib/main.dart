@@ -16,8 +16,10 @@ void main() {
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp(
+
           debugShowCheckedModeBanner: false,
           home: CoinsPage(),
+
         );
       },
     ),
