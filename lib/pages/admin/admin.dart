@@ -22,7 +22,21 @@ class _AdminState extends State<Admin> {
   TextEditingController option3Controller = TextEditingController();
   TextEditingController option4Controller = TextEditingController();
   TextEditingController levelController = TextEditingController();
-  TextEditingController categoryController = TextEditingController();
+
+  String? selectedCategory;
+
+  int? selectedlevel;
+
+  final List<String> categories = [
+    "Addition",
+    "Subtraction",
+    "Multiplication",
+    "Division",
+  ];
+
+  final List<int> levels = List.generate(30, (index) {
+    return index + 1;
+  });
 
   Future<void> addQuestion() async {
     try {
@@ -32,8 +46,8 @@ class _AdminState extends State<Admin> {
         'option2': option2Controller.text,
         'option3': option3Controller.text,
         'correct_answer': option4Controller.text,
-        'level': int.parse(levelController.text),
-        'category': categoryController.text,
+        'level': selectedlevel,
+        'category': selectedCategory,
       });
 
       ScaffoldMessenger.of(
@@ -46,13 +60,30 @@ class _AdminState extends State<Admin> {
       option3Controller.clear();
       option4Controller.clear();
       levelController.clear();
-      categoryController.clear();
-    } catch (e) {
-      print("objectsdfghjk ${e}");
+
+      setState(() {
+        selectedCategory = null;
+        selectedlevel = null;
+      });
+    } on PostgrestException catch (e) {
+      print("Message: ${e.message}");
+      print("Code: ${e.code}");
+      print("Details: ${e.details}");
+      print("Hint: ${e.hint}");
+
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
+      ).showSnackBar(SnackBar(content: Text(e.message)));
+    } catch (e) {
+      print(e);
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('$levels');
   }
 
   @override
@@ -68,8 +99,52 @@ class _AdminState extends State<Admin> {
             field(controller: option2Controller, text: "Option2"),
             field(controller: option3Controller, text: "Option3"),
             field(controller: option4Controller, text: "To'g'ri javob"),
-            field(controller: levelController, text: "Level"),
-            field(controller: categoryController, text: "Category"),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: DropdownButtonFormField<int>(
+                value: selectedlevel,
+                decoration: InputDecoration(
+                  hintText: "Level(1 dan -30 gacha)",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                items: levels.map((level) {
+                  return DropdownMenuItem(
+                    value: level,
+                    child: Text(level.toString()),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedlevel = value;
+                  });
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: DropdownButtonFormField<String>(
+                value: selectedCategory,
+                decoration: InputDecoration(
+                  hintText: "Category",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                items: categories.map((category) {
+                  return DropdownMenuItem(
+                    value: category,
+                    child: Text(category),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    selectedCategory = value;
+                  });
+                },
+              ),
+            ),
             Spacer(),
             ElevatedButton(
               onPressed: addQuestion,

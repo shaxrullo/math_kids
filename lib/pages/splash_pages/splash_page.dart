@@ -2,6 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:math_kids/pages/homepage/allPages.dart';
+import 'package:math_kids/pages/homepage/homepage.dart';
+import 'package:math_kids/pages/register_pages/sign_In_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -10,8 +14,7 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage>
-    with TickerProviderStateMixin {
+class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _progress;
   late final AnimationController _rayController;
@@ -25,14 +28,14 @@ class _SplashPageState extends State<SplashPage>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds:5 ),
+      duration: const Duration(seconds: 3),
     );
     _progress = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
     _controller.forward();
 
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        // Navigator.pushReplacement(context, ...);
+        _navigate();
       }
     });
 
@@ -41,6 +44,20 @@ class _SplashPageState extends State<SplashPage>
       vsync: this,
       duration: const Duration(seconds: 20),
     )..repeat();
+  }
+
+  void _navigate() {
+    if (!mounted) return;
+
+    final session = Supabase.instance.client.auth.currentSession;
+
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            session != null ? const Allpages() : const SignInPage(),
+      ),
+    );
   }
 
   @override
@@ -74,16 +91,13 @@ class _SplashPageState extends State<SplashPage>
             children: [
               // Logo markazda
               Expanded(
-                  child: Positioned(
-                    top: 296.h,
-                    right: 85.w,
-                    child: Container(
-                      width: 220.w,
-                      height: 171.h,
-                      margin: .all(20),
-                      child: Image.asset("assets/app/img.png"),
-                    ),
+                child: Center(
+                  child: SizedBox(
+                    width: 220.w,
+                    height: 171.h,
+                    child: Image.asset("assets/app/img.png"),
                   ),
+                ),
               ),
 
               // Pastdagi progress bar bloki
@@ -121,7 +135,7 @@ class _SplashPageState extends State<SplashPage>
                     ),
                     SizedBox(height: 12.h),
 
-                    // Progress bar - oq border, qizil to'lish, ko'k track
+                    // Progress bar
                     AnimatedBuilder(
                       animation: _progress,
                       builder: (context, child) {
@@ -130,10 +144,7 @@ class _SplashPageState extends State<SplashPage>
                           decoration: BoxDecoration(
                             color: const Color(0xFF1568C1),
                             borderRadius: BorderRadius.circular(20.r),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 2.5,
-                            ),
+                            border: Border.all(color: Colors.white, width: 2.5),
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.r),
@@ -160,7 +171,6 @@ class _SplashPageState extends State<SplashPage>
 }
 
 /// Sunburst (quyosh nurlari) effektini chizadigan painter.
-/// Ikkita och/to'q ko'k rang navbatlashib, markazdan chetga qarab nurlar chiziladi.
 class _SunburstPainter extends CustomPainter {
   final double rotation;
 

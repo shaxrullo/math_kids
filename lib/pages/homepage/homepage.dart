@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:math_kids/colors/colors.dart';
 import 'package:math_kids/models/homepageModel.dart';
+import 'package:math_kids/pages/substraction/substraction.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
@@ -56,7 +57,6 @@ class Homepage extends StatelessWidget {
               ],
             ),
           ),
-          
         ],
       ),
       body: CustomScrollView(
@@ -119,7 +119,7 @@ class Homepage extends StatelessWidget {
                         return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 10.w),
                           child: Column(
-                            mainAxisSize: MainAxisSize.min, // <-- shart
+                            mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
@@ -211,7 +211,15 @@ class Homepage extends StatelessWidget {
                           ),
                           SizedBox(height: 16.h),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      Substraction(text: lis.title),
+                                ),
+                              );
+                            },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: lis.elevatedColor,
                               minimumSize: Size(77.w, 60.h),
@@ -233,7 +241,11 @@ class Homepage extends StatelessWidget {
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 40.0),
-                      child: Image.asset(lis.image),
+                      child: SizedBox(
+                        width: 110.w,
+                        height: 110.h,
+                        child: Image.asset(lis.image, fit: BoxFit.contain),
+                      ),
                     ),
                   ],
                 ),

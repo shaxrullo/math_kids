@@ -11,6 +11,8 @@ class CustomInputField extends StatelessWidget {
   final InputFieldStatus status;
   final String? errorText;
   final ValueChanged<String>? onChanged;
+  final TextInputType? keyboardType;
+  final bool obscureText;
 
   const CustomInputField({
     super.key,
@@ -20,6 +22,8 @@ class CustomInputField extends StatelessWidget {
     this.status = InputFieldStatus.placeholder,
     this.errorText,
     this.onChanged,
+    this.keyboardType,
+    this.obscureText = false,
   });
 
   // --- Ranglar ---
@@ -50,7 +54,8 @@ class CustomInputField extends StatelessWidget {
       return Border.all(
         color: const Color(0xFF7C3AED),
         width: 1.5,
-        style: BorderStyle.solid, // pastroqda DottedBorder bilan almashtirsa bo'ladi
+        style: BorderStyle
+            .solid, // pastroqda DottedBorder bilan almashtirsa bo'ladi
       );
     }
     return null;
@@ -85,6 +90,8 @@ class CustomInputField extends StatelessWidget {
           child: TextField(
             controller: controller,
             onChanged: onChanged,
+            keyboardType: keyboardType,
+            obscureText: obscureText,
             style: TextStyle(
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
@@ -108,10 +115,7 @@ class CustomInputField extends StatelessWidget {
           SizedBox(height: 4.h),
           Text(
             errorText!,
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: const Color(0xFFE05353),
-            ),
+            style: TextStyle(fontSize: 12.sp, color: const Color(0xFFE05353)),
           ),
         ],
       ],

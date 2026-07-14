@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:math_kids/colors/colors.dart';
 import 'package:math_kids/models/buttun.dart';
+import 'package:math_kids/pages/homepage/allPages.dart';
 import 'package:math_kids/pages/stakes/animate.dart';
 import 'package:math_kids/servises/services.dart';
 
@@ -127,10 +128,15 @@ class _SteakState extends State<Steak> {
               ),
               SizedBox(height: 122.h),
               buttun(
-                color: Color(0xFF00BCFF),
+                color: const Color(0xFF00BCFF),
                 txcolor: Colors.white,
                 text: "Continue",
-                onTab: () {},
+                onTab: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Allpages()),
+                  );
+                },
                 height: 52.h,
                 width: double.infinity,
               ),

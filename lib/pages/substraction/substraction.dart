@@ -1,11 +1,33 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:math_kids/colors/colors.dart';
+import 'package:math_kids/constlar/supabase.dart';
 import 'package:math_kids/models/buttun.dart';
+import 'package:math_kids/models/test/test.dart';
+import 'package:math_kids/pages/question/quetion.dart';
 
-class Substraction extends StatelessWidget {
-  const Substraction({super.key});
+class Substraction extends StatefulWidget {
+  String text;
+  Substraction({super.key, required this.text});
+
+  @override
+  State<Substraction> createState() => _SubstractionState();
+}
+
+class _SubstractionState extends State<Substraction> {
+  List<Test> testlar = [];
+
+  Future<void> testQuery() async {
+    final response = await supabase
+        .from('test')
+        .select()
+        .eq('category', widget.text);
+
+    testlar = response.map((e) => Test.fromJson(e)).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +52,7 @@ class Substraction extends StatelessWidget {
                       mainAxisAlignment: .start,
                       children: [
                         Text(
-                          "Addition",
+                          "${widget.text}",
                           style: GoogleFonts.lilitaOne(
                             fontWeight: FontWeight.w600,
                             fontSize: 18.sp,
@@ -93,80 +115,15 @@ class Substraction extends StatelessWidget {
         itemCount: 12,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) {
-                return SizedBox(
-                  height: 354.h,
-                  child: AlertDialog(
-                  
-                    title: Text(
-                      "Difficulty",
-                      style: GoogleFonts.lilitaOne(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 30,
-                      ),
-                    ),
-                    content: Column(
-                      mainAxisSize: .min,
-                      children: [
-                        ListTile(
-                          title: Text(
-                            "Easy",
-                            style: GoogleFonts.lilitaOne(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                          trailing: Icon(Icons.circle_outlined),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "Normal",
-                            style: GoogleFonts.lilitaOne(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                          trailing: Icon(Icons.circle_outlined),
-                        ),
-                        ListTile(
-                          title: Text(
-                            "Hard",
-                            style: GoogleFonts.lilitaOne(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
-                              color: AppColors.textPrimary,
-                            ),
-                          ),
-                          trailing: Icon(Icons.circle_outlined),
-                        ),
-                      ],
-                    ),
-                    actions: [
-                      buttun(
-                        color: AppColors.borderSecondary,
-                        txcolor: AppColors.textPrimary,
-                        text: "Cancel",
-                        onTab: () =>Navigator.pop(context),
-                        height: 44.h,
-                        width: 136.w,
-                      ),
-                      buttun(
-                        color: AppColors.brandBorder,
-                        txcolor: AppColors.textWhite,
-                        text: "Start",
-                        onTab: () {},
-                        height: 44.h,
-                        width: 136.w,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Quetion(level: index+1, text: widget.text),
+                ),
+              );
+            },
             child: Container(
               margin: .symmetric(horizontal: 16.w, vertical: 8.h),
               decoration: BoxDecoration(

@@ -11,7 +11,9 @@ import 'package:math_kids/pages/question/paint.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class Quetion extends StatefulWidget {
-  const Quetion({super.key});
+  int level;
+  String text;
+  Quetion({super.key, required this.level, required this.text});
 
   @override
   State<Quetion> createState() => _QuetionState();
@@ -33,7 +35,12 @@ class _QuetionState extends State<Quetion> {
   int maxQuestions = 5;
 
   Future<void> getTests() async {
-    final response = await supabase.from('test').select().order('id');
+    final response = await supabase
+        .from('test')
+        .select()
+        .eq('category', widget.text)
+        .eq('level', widget.level)
+        .order('id');
 
     tests = response.map((e) => Test.fromJson(e)).toList();
 
@@ -89,6 +96,16 @@ class _QuetionState extends State<Quetion> {
     ];
 
     options.shuffle();
+  }
+
+  Future<void> testQuery() async {
+    final response = await supabase
+        .from('test')
+        .select()
+        .eq('category', widget.text)
+        .eq('level', widget.level);
+
+    tests = response.map((e) => Test.fromJson(e)).toList();
   }
 
   @override
@@ -252,7 +269,7 @@ class _QuetionState extends State<Quetion> {
                         color: AppColors.borderPrimary,
                         border: Border.all(
                           color: selectedIndex == index
-                              ? (isCorrect! ? Colors.green : Colors.red)
+                              ? (isCorrect == true ? Colors.green : Colors.red)
                               : AppColors.borderSecondary,
                           width: 3,
                         ),
@@ -325,6 +342,7 @@ class _QuetionState extends State<Quetion> {
   }
 }
 
+// ignore: must_be_immutable
 class helper extends StatelessWidget {
   VoidCallback onHit;
   helper({super.key, required this.onHit});

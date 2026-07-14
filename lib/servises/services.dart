@@ -4,6 +4,25 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 class StreakService {
   final supabase = Supabase.instance.client;
 
+  /// Faqat activity va streak ma'lumotlarini qaytaradi (update qilmaydi)
+  Future<Map<String, dynamic>> fetchStreakData() async {
+    final user = supabase.auth.currentUser;
+    if (user == null) throw Exception("User topilmadi");
+
+    final userData = await supabase
+        .from("users")
+        .select("streak")
+        .eq("id", user.id)
+        .single();
+
+    final activity = await supabase
+        .from("user_activity")
+        .select("login_date")
+        .eq("user_id", user.id);
+
+    return {"streak": userData["streak"] ?? 0, "activity": activity};
+  }
+
   Future<Map<String, dynamic>> loadStreak() async {
     final user = supabase.auth.currentUser;
 
@@ -25,42 +44,42 @@ class StreakService {
 
     DateTime? lastLogin;
 
-    if (userData["last_login"] != null) {
-      lastLogin = DateTime.parse(userData["last_login"]);
+    // jadvalda ustun nomi: login_date
+    if (userData["login_date"] != null) {
+      lastLogin = DateTime.parse(userData["login_date"]);
     }
 
     /// Agar birinchi marta kirayotgan bo'lsa
     if (lastLogin == null) {
       streak = 1;
 
-      await supabase.from("users").update({
-        "streak": streak,
-        "last_login": todayString,
-      }).eq("id", user.id);
+      await supabase
+          .from("users")
+          .update({"streak": streak, "login_date": todayString})
+          .eq("id", user.id);
     } else {
       final diff = today.difference(lastLogin).inDays;
 
       if (diff == 1) {
         streak++;
 
-        await supabase.from("users").update({
-          "streak": streak,
-          "last_login": todayString,
-        }).eq("id", user.id);
+        await supabase
+            .from("users")
+            .update({"streak": streak, "login_date": todayString})
+            .eq("id", user.id);
       }
 
       if (diff > 1) {
         streak = 1;
 
-        await supabase.from("users").update({
-          "streak": streak,
-          "last_login": todayString,
-        }).eq("id", user.id);
+        await supabase
+            .from("users")
+            .update({"streak": streak, "login_date": todayString})
+            .eq("id", user.id);
       }
     }
 
     /// user_activity ga bugungi sanani qo'shish
-
     final exist = await supabase
         .from("user_activity")
         .select()
@@ -75,15 +94,11 @@ class StreakService {
     }
 
     /// activity olish
-
     final activity = await supabase
         .from("user_activity")
         .select("login_date")
         .eq("user_id", user.id);
 
-    return {
-      "streak": streak,
-      "activity": activity,
-    };
+    return {"streak": streak, "activity": activity};
   }
 }
